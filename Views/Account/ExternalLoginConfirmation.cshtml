@@ -5,7 +5,13 @@
 <h2>@ViewBag.Title.</h2>
 <h3>Associate your @ViewBag.LoginProvider account.</h3>
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm(
+    actionName: "ExternalLoginConfirmation",
+    controllerName: "Account",
+    routeValues: new { ReturnUrl = ViewBag.ReturnUrl },
+    method: FormMethod.Post,
+    antiforgery: false,
+    htmlAttributes: new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -32,5 +38,12 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 }
+
+
+@* @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+} *@

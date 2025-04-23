@@ -38,6 +38,11 @@ namespace MvcMovie.Models
 
     public class MovieDBContext : DbContext
     {
+        public MovieDBContext()
+            : base("aspnet-MvcMovie")
+        {
+        }
+
         public DbSet<Movie> Movies { get; set; }
     }
 }
