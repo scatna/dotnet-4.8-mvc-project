@@ -1,11 +1,13 @@
 ﻿@model MvcMovie.Models.ExternalLoginListViewModel
 @using Microsoft.AspNetCore.Authentication
-@* @using Microsoft.Owin.Security *@
+@using Microsoft.AspNetCore.Identity
+@using MvcMovie.Models
+@inject SignInManager<ApplicationUser> SignInManager
 
 <h4>Use another service to log in.</h4>
 <hr />
 @{
-    var loginProviders = new List<AuthenticationScheme>();       // Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     if (loginProviders.Count() == 0)
     {
         <div>
