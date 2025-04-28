@@ -1,7 +1,7 @@
 ## ASP.NET MVC sample app used in blog on modernizing .NET apps w/AI
 
 This is the original MvcMovie sample ASP.NET MVC application from circa 2012. This is the app I used in a blog post on .NET Framework modernization: 
-**[Modernizing ASP.NET MVC to .NET 8 with Amazon Q Developer](https://evolvecloudservices.com/2025/04/24/modernizing-asp-net-mvc-to-net-8-with-amazon-q-developer/)*
+**[Modernizing ASP.NET MVC to .NET 8 with Amazon Q Developer](https://evolvecloudservices.com/2025/04/24/modernizing-asp-net-mvc-to-net-8-with-amazon-q-developer/)**
 
 There are three branches in this repo:
 
