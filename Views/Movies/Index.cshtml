@@ -1,20 +1,34 @@
-﻿@model IEnumerable<MvcMovie.Models.Movie>
+@model IEnumerable<MvcMovie.Models.Movie>
 @{
-    ViewBag.Title = "Index";
+    ViewData["Title"] = "Index";
 }
 <h2>Index</h2>
+
 <p>
-    @Html.ActionLink("Create New", "Create")
-    @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
-    {
+    <a asp-action="Create">Create New</a>
+</p>
+
+@* <form asp-action="Index" method="get">
+    <p>
+        <select asp-for="@ViewData["MovieGenre"]" asp-items="ViewBag.MovieGenre" multiple="false">
+            <option value="">All</option>
+        </select>
+        Title: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </p>
+</form> *@
+
+@using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+{
     <p>
         Genre: @Html.DropDownList("MovieGenre", "All")
         Title: @Html.TextBox("SearchString")
         <input type="submit" value="Filter" />
     </p>
-    }
-    </p>
-    <table class="table">
+}
+
+<table class="table">
+    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -31,10 +45,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
-
             <th></th>
         </tr>
-
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -53,13 +67,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Rating)
                 </td>
-
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
         }
-
-    </table>
+    </tbody>
+</table>

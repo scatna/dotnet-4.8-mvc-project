@@ -1,7 +1,7 @@
-﻿@model MvcMovie.Models.Movie
+@model MvcMovie.Models.Movie
 
 @{
-    ViewBag.Title = "Details";
+    ViewData["Title"] = "Details";
 }
 
 <h2>Details</h2>
@@ -9,42 +9,40 @@
 <div>
     <h4>Movie</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
+    <dl class="row">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReleaseDate)
         </dt>
-
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
-
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Genre)
         </dt>
-
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Genre)
         </dd>
-
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
