@@ -4,38 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Movie App</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-
-        <script src="~/Scripts/globalize/globalize.js"></script>
-        <script src="~/Scripts/globalize/cultures/globalize.culture.@(System.Threading.Thread.CurrentThread.CurrentCulture.Name).js"></script>
-        <script>
-    $.validator.methods.number = function (value, element) {
-        return this.optional(element) ||
-            !isNaN(Globalize.parseFloat(value));
-    }
-    $(document).ready(function () {
-        Globalize.culture('@(System.Threading.Thread.CurrentThread.CurrentCulture.Name)');
-    });
-        </script>
-        <script>
-    jQuery.extend(jQuery.validator.methods, {
-        range: function (value, element, param) {
-            //Use the Globalization plugin to parse the value
-            var val = Globalize.parseFloat(value);
-            return this.optional(element) || (
-                val >= param[0] && val <= param[1]);
-        }
-    });
-    $.validator.methods.date = function (value, element) {
-        return this.optional(element) ||
-            Globalize.parseDate(value) ||
-            Globalize.parseDate(value, "yyyy-MM-dd");
-    }
-        </script>
-    }
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -46,15 +17,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MVC Movie", "Index", "Movies", null, new { @class = "navbar-brand" })
+                <a asp-controller="Movies" asp-action="Index" class="navbar-brand">MVC Movie</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </div>
@@ -67,8 +38,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

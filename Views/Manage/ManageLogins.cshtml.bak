@@ -1,5 +1,5 @@
 ﻿@model MvcMovie.Models.ManageLoginsViewModel
-@using Microsoft.Owin.Security
+@using Microsoft.AspNetCore.Authentication
 @{
     ViewBag.Title = "Manage your external logins";
 }

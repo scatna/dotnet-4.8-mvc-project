@@ -1,31 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
 {
     public class MoviesController : Controller
     {
-        private MovieDBContext db = new MovieDBContext();
+        private readonly ApplicationDbContext _context;
+
+        public MoviesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         // GET: Movies
-        public ActionResult Index(string movieGenre, string searchString)
+        public IActionResult Index(string movieGenre, string searchString)
         {
             var genreLst = new List<string>();
 
-            var genreQry = from d in db.Movies
+            var genreQry = from d in _context.Movies
                            orderby d.Genre
                            select d.Genre;
 
             genreLst.AddRange(genreQry.Distinct());
             ViewBag.MovieGenre = new SelectList(genreLst);
 
-            var movies = from m in db.Movies
+            var movies = from m in _context.Movies
                          select m;
 
             if (!string.IsNullOrEmpty(searchString))
@@ -42,28 +48,28 @@ namespace MvcMovie.Controllers
         }
 
         [HttpPost]
-        public string Index(FormCollection fc, string searchString)
+        public string Index(string searchString)
         {
             return "<h3> From [HttpPost]Index: " + searchString + "</h3>";
         }
 
         // GET: Movies/Details/5
-        public ActionResult Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(400);
+                return BadRequest();
             }
-            Movie movie = db.Movies.Find(id);
+            Movie movie = _context.Movies.Find(id);
             if (movie == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             return View(movie);
         }
 
         // GET: Movies/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -73,12 +79,12 @@ namespace MvcMovie.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        public IActionResult Create([Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-                db.Movies.Add(movie);
-                db.SaveChanges();
+                _context.Movies.Add(movie);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -86,16 +92,16 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies/Edit/5
-        public ActionResult Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+                return BadRequest();
             }
-            Movie movie = db.Movies.Find(id);
+            Movie movie = _context.Movies.Find(id);
             if (movie == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             return View(movie);
         }
@@ -105,50 +111,41 @@ namespace MvcMovie.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        public IActionResult Edit([Bind("ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(movie).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                _context.Entry(movie).State = EntityState.Modified;
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(movie);
         }
 
         // GET: Movies/Delete/5
-        public ActionResult Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
+                return BadRequest();
             }
-            Movie movie = db.Movies.Find(id);
+            Movie movie = _context.Movies.Find(id);
             if (movie == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
             return View(movie);
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, System.Web.Mvc.ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            Movie movie = db.Movies.Find(id);
-            db.Movies.Remove(movie);
-            db.SaveChanges();
+            Movie movie = _context.Movies.Find(id);
+            _context.Movies.Remove(movie);
+            _context.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

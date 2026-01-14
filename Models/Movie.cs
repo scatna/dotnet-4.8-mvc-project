@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MvcMovie.Models
 {
@@ -34,10 +34,5 @@ namespace MvcMovie.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [StringLength(5)]
         public string Rating { get; set; }
-    }
-
-    public class MovieDBContext : DbContext
-    {
-        public DbSet<Movie> Movies { get; set; }
     }
 }
