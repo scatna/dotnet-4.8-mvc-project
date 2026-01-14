@@ -1,16 +1,15 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MvcMovie.Controllers
 {
     public class HelloWorldController : Controller
     {
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Welcome(string name, int numTimes = 1)
+        public IActionResult Welcome(string name, int numTimes = 1)
         {
             ViewBag.Message = "Hello " + name;
             ViewBag.NumTimes = numTimes;

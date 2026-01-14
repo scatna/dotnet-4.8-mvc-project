@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace MvcMovie.Models
 {
@@ -11,7 +9,7 @@ namespace MvcMovie.Models
 
 
         [StringLength(60, MinimumLength = 3)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
 
         [Display(Name = "Release Date")]
@@ -23,7 +21,7 @@ namespace MvcMovie.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [Required]
         [StringLength(30)]
-        public string Genre { get; set; }
+        public string? Genre { get; set; }
 
 
         [Range(1, 100)]
@@ -33,11 +31,6 @@ namespace MvcMovie.Models
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [StringLength(5)]
-        public string Rating { get; set; }
-    }
-
-    public class MovieDBContext : DbContext
-    {
-        public DbSet<Movie> Movies { get; set; }
+        public string? Rating { get; set; }
     }
 }
